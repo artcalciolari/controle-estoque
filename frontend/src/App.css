@@ -1,3 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@100;300;400;500&display=swap');
+
+:root {
+  --color-dark: #2b2525;
+  --color-dark-green: #2c3a2c;
+  --color-green: #6da478;
+  --color-light: #f7f7eb;
+}
+
+* {
+  font-family: 'Work Sans', sans-serif;
+}
+
+body {
+  background-color: var(--color-light);
+  color: var(--color-dark);
+}
+
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -10,18 +28,42 @@ header {
   align-items: center;
   margin-bottom: 2rem;
   padding-bottom: 1rem;
-  border-bottom: 2px solid #e0e0e0;
+  border-bottom: 2px solid var(--color-dark-green);
+  gap: 1rem;
 }
 
 header h1 {
   margin: 0;
-  color: #333;
+  color: var(--color-dark);
+  font-weight: 500;
+}
+
+.search-container {
+  flex: 1;
+  margin: 0 2rem;
+  max-width: 400px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.6rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--color-green);
+  box-shadow: 0 0 0 2px rgba(109, 164, 120, 0.2);
 }
 
 .loading {
   text-align: center;
   padding: 2rem;
   font-size: 1.2rem;
+  color: var(--color-dark);
 }
 
 .btn {
@@ -34,33 +76,35 @@ header h1 {
 }
 
 .btn-primary {
-  background-color: #4CAF50;
-  color: white;
+  background-color: var(--color-green);
+  color: var(--color-light);
 }
 
 .btn-primary:hover {
-  background-color: #45a049;
+  background-color: var(--color-dark-green);
 }
 
 .btn-secondary {
-  background-color: #6c757d;
-  color: white;
+  background-color: var(--color-dark);
+  color: var(--color-light);
 }
 
 .btn-secondary:hover {
-  background-color: #5a6268;
+  background-color: var(--color-dark-green);
 }
 
 .form-container {
-  background-color: #f5f5f5;
+  background-color: var(--color-light);
   padding: 1.5rem;
   border-radius: 8px;
   margin-bottom: 2rem;
+  border: 1px solid var(--color-dark-green);
 }
 
 .form-container h2 {
   margin-top: 0;
-  color: #333;
+  color: var(--color-dark);
+  font-weight: 500;
 }
 
 form {
@@ -77,8 +121,8 @@ form {
 
 .form-group label {
   margin-bottom: 0.3rem;
-  font-weight: 500;
-  color: #555;
+  font-weight: 400;
+  color: var(--color-dark);
 }
 
 .form-group input,
@@ -117,44 +161,45 @@ form {
 }
 
 .products-list h2 {
-  color: #333;
+  color: var(--color-dark);
   margin-bottom: 1rem;
+  font-weight: 500;
 }
 
 .empty-message {
   text-align: center;
   padding: 2rem;
-  color: #666;
+  color: var(--color-dark);
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
-  background-color: white;
+  background-color: var(--color-light);
   border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 thead {
-  background-color: #f8f9fa;
+  background-color: var(--color-dark-green);
 }
 
 th {
   padding: 1rem;
   text-align: left;
-  font-weight: 600;
-  color: #333;
-  border-bottom: 2px solid #e0e0e0;
+  font-weight: 500;
+  color: var(--color-light);
+  border-bottom: 2px solid var(--color-green);
 }
 
 td {
   padding: 1rem;
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid var(--color-dark-green);
 }
 
 tbody tr:hover {
-  background-color: #f8f9fa;
+  background-color: rgba(109, 164, 120, 0.1);
 }
 
 tbody tr.em-falta {
@@ -169,13 +214,13 @@ tbody tr.em-falta {
 }
 
 .badge.fresca {
-  background-color: #d4edda;
-  color: #155724;
+  background-color: var(--color-green);
+  color: var(--color-light);
 }
 
 .badge.congelada {
-  background-color: #d1ecf1;
-  color: #0c5460;
+  background-color: var(--color-dark-green);
+  color: var(--color-light);
 }
 
 .status {
@@ -186,13 +231,13 @@ tbody tr.em-falta {
 }
 
 .status.disponivel {
-  background-color: #d4edda;
-  color: #155724;
+  background-color: var(--color-green);
+  color: var(--color-light);
 }
 
 .status.em-falta {
-  background-color: #f8d7da;
-  color: #721c24;
+  background-color: var(--color-dark);
+  color: var(--color-light);
 }
 
 .actions {
@@ -228,7 +273,8 @@ tbody tr.em-falta {
     font-size: 0.9rem;
   }
 
-  th, td {
+  th,
+  td {
     padding: 0.5rem;
   }
 
@@ -236,4 +282,3 @@ tbody tr.em-falta {
     flex-direction: column;
   }
 }
-

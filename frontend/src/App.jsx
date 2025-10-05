@@ -7,6 +7,7 @@ function App()
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
   const [formData, setFormData] = useState({
     nome_massa: '',
     tipo_massa: 'fresca',
@@ -115,6 +116,12 @@ function App()
     setShowForm(false);
   };
 
+  // Filtrar produtos baseado no termo de busca
+  const produtosFiltrados = produtos.filter(produto =>
+    produto.nome_massa.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    produto.tipo_massa.toLowerCase().includes(searchTerm.toLowerCase()),
+  );
+
   if (loading) 
   {
     return <div className="loading">Carregando...</div>;
@@ -124,6 +131,15 @@ function App()
     <div className="container">
       <header>
         <h1>📦 Controle de Estoque</h1>
+        <div className="search-container">
+          <input
+            type="text"
+            placeholder="Buscar produtos..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="search-input"
+          />
+        </div>
         <button 
           className="btn btn-primary"
           onClick={() => setShowForm(!showForm)}
@@ -196,7 +212,7 @@ function App()
       )}
 
       <div className="products-list">
-        <h2>Produtos em Estoque</h2>
+        <h2>Produtos</h2>
         {produtos.length === 0 ? (
           <p className="empty-message">Nenhum produto cadastrado ainda.</p>
         ) : (
@@ -211,7 +227,7 @@ function App()
               </tr>
             </thead>
             <tbody>
-              {produtos.map((produto) => (
+              {produtosFiltrados.map((produto) => (
                 <tr key={produto.id} className={produto.em_falta ? 'em-falta' : ''}>
                   <td>{produto.nome_massa}</td>
                   <td>
