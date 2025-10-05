@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react'
-import './App.css'
+import { useState, useEffect } from 'react';
+import './App.css';
 
-function App() {
+function App() 
+{
   const [produtos, setProdutos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
@@ -10,31 +11,38 @@ function App() {
     nome_massa: '',
     tipo_massa: 'fresca',
     quantia: 0,
-    em_falta: false
+    em_falta: false,
   });
 
   const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
 
-  useEffect(() => {
+  useEffect(() => 
+  {
     fetchProdutos();
-  }, []);
+  });
 
-  const fetchProdutos = async () => {
-    try {
+  const fetchProdutos = async() => 
+  {
+    try 
+    {
       const response = await fetch(`${API_URL}/produtos`);
       const data = await response.json();
       setProdutos(data);
       setLoading(false);
-    } catch (error) {
+    }
+    catch (error) 
+    {
       console.error('Error fetching products:', error);
       setLoading(false);
     }
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async(e) => 
+  {
     e.preventDefault();
     
-    try {
+    try 
+    {
       const url = editingId 
         ? `${API_URL}/produtos/${editingId}`
         : `${API_URL}/produtos`;
@@ -49,54 +57,66 @@ function App() {
         body: JSON.stringify(formData),
       });
 
-      if (response.ok) {
+      if (response.ok) 
+      {
         fetchProdutos();
         resetForm();
       }
-    } catch (error) {
+    }
+    catch (error) 
+    {
       console.error('Error saving product:', error);
     }
   };
 
-  const handleEdit = (produto) => {
+  const handleEdit = (produto) => 
+  {
     setFormData({
       nome_massa: produto.nome_massa,
       tipo_massa: produto.tipo_massa,
-      quantia: produto.quantia,
-      em_falta: produto.em_falta
+      quantia: produto.quantia, // Mantém em gramas para o estado interno
+      em_falta: produto.em_falta,
     });
     setEditingId(produto.id);
     setShowForm(true);
   };
 
-  const handleDelete = async (id) => {
-    if (window.confirm('Tem certeza que deseja excluir este produto?')) {
-      try {
+  const handleDelete = async(id) => 
+  {
+    if (window.confirm('Tem certeza que deseja excluir este produto?')) 
+    {
+      try 
+      {
         const response = await fetch(`${API_URL}/produtos/${id}`, {
           method: 'DELETE',
         });
 
-        if (response.ok) {
+        if (response.ok) 
+        {
           fetchProdutos();
         }
-      } catch (error) {
+      }
+      catch (error) 
+      {
         console.error('Error deleting product:', error);
       }
     }
   };
 
-  const resetForm = () => {
+  const resetForm = () => 
+  {
     setFormData({
       nome_massa: '',
       tipo_massa: 'fresca',
       quantia: 0,
-      em_falta: false
+      em_falta: false,
     });
     setEditingId(null);
     setShowForm(false);
   };
 
-  if (loading) {
+  if (loading) 
+  {
     return <div className="loading">Carregando...</div>;
   }
 
@@ -117,8 +137,9 @@ function App() {
           <h2>{editingId ? 'Editar Produto' : 'Novo Produto'}</h2>
           <form onSubmit={handleSubmit}>
             <div className="form-group">
-              <label>Nome da Massa:</label>
+              <label htmlFor="nome_massa">Nome da Massa:</label>
               <input
+                id="nome_massa"
                 type="text"
                 value={formData.nome_massa}
                 onChange={(e) => setFormData({ ...formData, nome_massa: e.target.value })}
@@ -127,8 +148,9 @@ function App() {
             </div>
 
             <div className="form-group">
-              <label>Tipo de Massa:</label>
+              <label htmlFor="tipo_massa">Tipo de Massa:</label>
               <select
+                id="tipo_massa"
                 value={formData.tipo_massa}
                 onChange={(e) => setFormData({ ...formData, tipo_massa: e.target.value })}
                 required
@@ -139,11 +161,12 @@ function App() {
             </div>
 
             <div className="form-group">
-              <label>Quantidade:</label>
+              <label htmlFor="quantia">Quantidade (g):</label>
               <input
+                id="quantia"
                 type="number"
                 value={formData.quantia}
-                onChange={(e) => setFormData({ ...formData, quantia: parseInt(e.target.value) })}
+                onChange={(e) => setFormData({ ...formData, quantia: parseInt(e.target.value) || 0 })}
                 min="0"
                 required
               />
@@ -196,7 +219,7 @@ function App() {
                       {produto.tipo_massa === 'congelada' ? '❄️ Congelada' : '🌿 Fresca'}
                     </span>
                   </td>
-                  <td>{produto.quantia}</td>
+                  <td>{(produto.quantia / 1000).toFixed(1)} Kg</td>
                   <td>
                     {produto.em_falta ? (
                       <span className="status em-falta">⚠️ Em Falta</span>
@@ -227,8 +250,8 @@ function App() {
         )}
       </div>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
 
